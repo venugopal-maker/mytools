@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Image Studio – Compress, Resize &amp; Add Text</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Image Studio</h1>
+  <p class="sub">Compress a photo to the exact size you need, resize it to passport size, and write a name or date on it. Everything runs in your browser, so your photo is never uploaded.</p>
+
+  <div class="card">
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose an image">
+      <b>Choose or drop a photo here</b>
+      <span>JPG, PNG, WebP and other image formats</span>
+    </div>
+    <input type="file" id="file" accept="image/*" hidden>
+    <div class="msg" id="msg" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="layout" id="work" hidden>
+    <div class="controls">
+
+      <section class="card">
+        <h2>1. Size</h2>
+        <label for="preset">Photo size</label>
+        <select id="preset">
+          <option value="orig">Keep original size</option>
+          <option value="413x531">Passport 35 × 45 mm (413 × 531 px)</option>
+          <option value="600x600">Passport 2 × 2 inch (600 × 600 px)</option>
+          <option value="354x472">Passport 30 × 40 mm (354 × 472 px)</option>
+          <option value="276x354">Stamp 25 × 30 mm (276 × 354 px)</option>
+          <option value="custom">Custom (pixels)</option>
+        </select>
+        <div class="two" id="customRow" hidden>
+          <div><label for="cw">Width (px)</label><input type="number" id="cw" value="413" min="20" max="10000"></div>
+          <div><label for="ch">Height (px)</label><input type="number" id="ch" value="531" min="20" max="10000"></div>
+        </div>
+        <p class="hint">A fixed size crops the photo from the centre to fit.</p>
+      </section>
+
+      <section class="card">
+        <h2>2. Text on the photo</h2>
+        <label for="text">Text (one line per row, for example name and date)</label>
+        <textarea id="text" rows="3" placeholder="Name&#10;DD/MM/YYYY"></textarea>
+        <div class="row"><button type="button" class="sec" id="today">Add today's date</button><button type="button" class="sec" id="clear">Clear text</button></div>
+        <div class="two">
+          <div><label for="pos">Where</label>
+            <select id="pos">
+              <option value="strip">In a strip below the photo</option>
+              <option value="bottom">On the photo, bottom</option>
+              <option value="top">On the photo, top</option>
+              <option value="middle">On the photo, middle</option>
+            </select></div>
+          <div><label for="fsize">Text size</label><input type="range" id="fsize" min="3" max="14" step="0.5" value="7"></div>
+        </div>
+        <div class="two">
+          <div><label for="tcolor">Text colour</label><input type="color" id="tcolor" value="#000000"></div>
+          <div><label for="bg">Strip colour</label><input type="color" id="bg" value="#ffffff"></div>
+        </div>
+        <label class="check"><input type="checkbox" id="bar"> Dark bar behind text (when on the photo)</label>
+      </section>
+
+      <section class="card">
+        <h2>3. Compress</h2>
+        <label for="mode">How</label>
+        <select id="mode">
+          <option value="target">Make it this size or smaller</option>
+          <option value="quality">Choose quality myself</option>
+        </select>
+        <div id="targetRow">
+          <label for="target">Target size</label>
+          <div class="two units"><input type="number" id="target" value="100" min="1" step="1"><select id="unit"><option value="1024">KB</option><option value="1048576">MB</option></select></div>
+        </div>
+        <div id="qualRow" hidden>
+          <label for="quality">Quality: <span id="qv">80</span>%</label>
+          <input type="range" id="quality" min="5" max="100" value="80">
+        </div>
+        <label for="fmt">Save as</label>
+        <select id="fmt">
+          <option value="image/jpeg">JPG (best for compressing)</option>
+          <option value="image/webp">WebP (smaller files)</option>
+          <option value="image/png">PNG (no quality loss, larger)</option>
+        </select>
+      </section>
+    </div>
+
+    <aside class="result card">
+      <h2>Result</h2>
+      <div class="preview"><img id="prev" alt="Preview of the edited photo"></div>
+      <div class="stats" id="stats"></div>
+      <button type="button" id="dl" disabled>Download photo</button>
+    </aside>
+  </div>
+</main>
+<script src="script.js"></script>
+</body>
+</html>

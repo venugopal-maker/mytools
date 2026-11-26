@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9eef5; --ink:#14213d; --muted:#4a5674; --card:#ffffff; --line:#c9d3e3;
+  --c1:#2b59ff; --c2:#e8336d; --c3:#0f9d76; --c4:#e08a00; --c5:#7b45e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#10162b; --ink:#eef2fb; --muted:#a3aecb; --card:#19213d; --line:#2c375c;
+         --c1:#7d9bff; --c2:#ff7aa2; --c3:#4fd1a5; --c4:#ffb340; --c5:#b393ff; }
+}
+*{box-sizing:border-box;margin:0}
+body{min-height:100vh;background:var(--bg);color:var(--ink);
+  font-family:'Sora',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.55;
+  display:flex;flex-direction:column;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+header{padding:56px 24px 24px;max-width:1040px;margin:0 auto;width:100%}
+header h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.1;letter-spacing:-.02em}
+header p{margin-top:12px;color:var(--muted)}
+.search{margin-top:22px;width:100%;max-width:380px;padding:12px 16px;font:inherit;color:var(--ink);
+  background:var(--card);border:2px solid var(--line);border-radius:12px}
+.search:focus{outline:none;border-color:var(--c1)}
+main{flex:1;max-width:1040px;margin:0 auto;width:100%;padding:12px 24px 48px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;align-content:start}
+.tool{--accent:var(--c1);display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;
+  background:var(--card);border:2px solid var(--line);border-top:6px solid var(--accent);
+  border-radius:16px;padding:22px;transition:border-color .2s,transform .2s}
+.tool:hover,.tool:focus-visible{transform:translateY(-3px);border-color:var(--accent);outline:none}
+.icon{font-size:2rem;line-height:1}
+.tool h2{font-size:1.2rem;font-weight:600}
+.tool p{color:var(--muted);font-size:.92rem}
+.open{margin-top:auto;padding-top:8px;font-weight:600;color:var(--accent);font-size:.92rem}
+.empty{grid-column:1/-1;color:var(--muted)}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){ .tool{transition:none} }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 id="title"></h1>
+  <p id="tagline"></p>
+  <input class="search" id="search" type="search" placeholder="Search tools" aria-label="Search tools">
+</header>
+
+<main id="grid"></main>
+
+<footer id="footer"></footer>
+
+<script>
+/* ============ EDIT ONLY THIS PART ============ */
+const SITE_TITLE = "My Tools";
+const TAGLINE    = "Choose a tool to get started.";
+
+/* To add a new website, copy one line and change it.
+   link  = folder or full URL of that website
+   icon  = any emoji                                  */
+const SITES = [
+  { name: "VoiceScribe",     icon: "🎙️", desc: "Convert video or audio into text.",           link: "voicescribe/index.html" },
+  { name: "Video Converter", icon: "🎞️", desc: "Turn a video into images or a PDF.",          link: "video-converter/index.html" },
+  { name: "Image Studio", icon: "🖼️", desc: "Compress to a set size, resize to passport size, add text.", link: "image-studio/index.html" },
+  // { name: "New Site",     icon: "🚀", desc: "Short description.",                           link: "new-site/index.html" },
+];
+/* ============================================= */
+
+const grid = document.getElementById('grid');
+document.getElementById('title').textContent = SITE_TITLE;
+document.getElementById('tagline').textContent = TAGLINE;
+document.getElementById('footer').textContent = SITE_TITLE;
+document.title = SITE_TITLE;
+
+function render(filter){
+  const q = (filter || '').trim().toLowerCase();
+  const list = SITES.filter(s => (s.name + ' ' + s.desc).toLowerCase().includes(q));
+  grid.innerHTML = '';
+  if(!list.length){
+    const e = document.createElement('p'); e.className = 'empty';
+    e.textContent = 'No tools match your search.'; grid.appendChild(e); return;
+  }
+  list.forEach(s => {
+    const i = SITES.indexOf(s) % 5 + 1;
+    const a = document.createElement('a');
+    a.className = 'tool'; a.href = s.link; a.style.setProperty('--accent', 'var(--c' + i + ')');
+    // add  a.target = '_blank';  here if you want each site to open in a new tab
+    const ic = document.createElement('span'); ic.className = 'icon'; ic.textContent = s.icon;
+    const h = document.createElement('h2'); h.textContent = s.name;
+    const p = document.createElement('p'); p.textContent = s.desc;
+    const o = document.createElement('span'); o.className = 'open'; o.textContent = 'Open ' + s.name;
+    a.append(ic, h, p, o); grid.appendChild(a);
+  });
+}
+document.getElementById('search').addEventListener('input', e => render(e.target.value));
+render();
+</script>
+</body>
+</html>
