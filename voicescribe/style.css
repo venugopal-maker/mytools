@@ -1,0 +1,27 @@
+
+:root{--bg:#eef2f6;--card:#fff;--ink:#10233b;--mute:#5b6b7e;--line:#d3dce6;--acc:#0b8f7c;--accink:#fff;--soft:#e2f3f0}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1520;--card:#142132;--ink:#e8eef5;--mute:#92a3b6;--line:#26384d;--acc:#3ccdb7;--accink:#07211c;--soft:#12332f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;padding:24px 16px 60px}
+main{max-width:780px;margin:0 auto}
+h1{font:800 clamp(2rem,6vw,3.2rem)/1.05 'Bricolage Grotesque',system-ui,sans-serif;margin:24px 0 8px;letter-spacing:-.02em}
+.sub{color:var(--mute);margin:0 0 24px;max-width:58ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px}
+#drop{border:2px dashed var(--line);border-radius:12px;padding:36px 16px;text-align:center;cursor:pointer}
+#drop.over,#drop:hover,#drop:focus-visible{border-color:var(--acc);background:var(--soft);outline:none}
+#drop b{font:700 1.15rem 'Bricolage Grotesque',sans-serif}
+#drop small{display:block;color:var(--mute)}
+.row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+label{font-size:.85rem;color:var(--mute);display:flex;flex-direction:column;gap:4px;flex:1;min-width:150px}
+select{font:inherit;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+button{font:600 1rem Inter,sans-serif;padding:12px 20px;border-radius:10px;border:0;background:var(--acc);color:var(--accink);cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+button:focus-visible,select:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:16px;display:none}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .3s}
+#st{margin-top:10px;color:var(--mute);font-size:.92rem;min-height:1.4em}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tools button{padding:8px 14px;font-size:.9rem}
+#text{width:100%;min-height:300px;resize:vertical;font:inherit;line-height:1.7;padding:14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.note{color:var(--mute);font-size:.82rem}
